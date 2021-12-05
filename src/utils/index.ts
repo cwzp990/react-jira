@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const isVoid = (value: any) => (value === 0 ? false : !value);
 
 export const cleanObject = (object?: { [key: string]: unknown }) => {
@@ -12,4 +14,29 @@ export const cleanObject = (object?: { [key: string]: unknown }) => {
     }
   });
   return result;
+};
+
+export const useArray = <T>(initArray: T[]) => {
+  const [value, setValue] = useState(initArray);
+
+  const add = (item: T) => {
+    setValue([...value, item]);
+  };
+
+  const clear = () => {
+    setValue([]);
+  };
+
+  const remove = (index: number) => {
+    const copy = [...value];
+    copy.splice(index, 1);
+    setValue(copy);
+  };
+
+  return {
+    value,
+    add,
+    clear,
+    remove,
+  };
 };
