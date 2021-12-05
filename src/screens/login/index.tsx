@@ -1,15 +1,10 @@
 import {Form, Input, Button} from 'antd'
 import { useState } from 'react'
-import { post } from '../../utils/request'
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (body: any) => {
-    post('/login', body).then(res => {
-      console.log(111, res)
-    })
-  }
+  const handleSubmit = (values: any) => {}
 
   return (
       <Form onFinish={handleSubmit}>
