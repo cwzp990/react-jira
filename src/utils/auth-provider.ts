@@ -11,15 +11,15 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 };
 
 export const login = async (body: any) => {
-  const user: any = await post("/login", body);
-  handleUserResponse(user);
+  const resp: any = await post("/login", body);
+  return handleUserResponse(resp);
 };
 
 export const register = async (body: any) => {
-  const user: any = await post("/register", body);
-  handleUserResponse(user);
+  const resp: any = await post("/register", body);
+  return handleUserResponse(resp);
 };
 
 export const logout = async () => {
-  window.localStorage.removeItem(localStorageKey);
+  return window.localStorage.removeItem(localStorageKey);
 };
