@@ -1,6 +1,7 @@
 /* eslint-disable no-sequences */
-import React, { useContext, useState, ReactNode } from "react";
+import React, { useContext, useState, ReactNode, useEffect } from "react";
 import * as auth from "../utils/auth-provider";
+import { post } from "../utils/request";
 
 interface AuthForm {
   username: string;
@@ -20,6 +21,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     auth.register(form).then((user: any) => setUser(user));
 
   const logout = () => auth.logout().then(() => setUser(null));
+
+  // useEffect(() => {
+  //   post('/me').then((resp: any) => {
+  //     setUser(resp.user)
+  //   })
+  // }, [])
 
   return <AuthContext.Provider children={children} value={{user, login, register, logout}} />;
 };

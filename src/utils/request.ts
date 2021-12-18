@@ -1,6 +1,8 @@
 import axios from "axios";
 import { cleanObject } from ".";
 import { MAIN_URL } from "./vars";
+import { message } from "antd";
+import { getToken } from "./auth-provider";
 
 const instance = axios.create({
   baseURL: MAIN_URL,
@@ -9,10 +11,19 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
+  if (getToken()) {
+    config.headers!.Authorization = getToken();
+  }
   return config;
 });
 
-instance.interceptors.response.use((response) => {
+instance.interceptors.response.use((response: any) => {
+  // console.log(111, response);
+  if (response.status === 200) {
+    message.info("请求成功");
+  } else {
+    message.warning(response.message);
+  }
   return response;
 });
 
@@ -25,7 +36,8 @@ export const get = (url: string, params?: any) => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.data);
+        message.warning(err.message);
+        reject(err.message);
       });
   });
 };
@@ -39,7 +51,8 @@ export const post = (url: string, body?: any) => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.data);
+        message.warning(err.message);
+        reject(err.message);
       });
   });
 };
