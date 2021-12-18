@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { get } from "./request";
 
 interface State<D> {
@@ -72,7 +72,8 @@ export const useList = (param: any) => {
 };
 
 export const useDocumentTitle = (title: string, keep: boolean = true) => {
-  const oldTitle = document.title;
+  //   const oldTitle = document.title;
+  const oldTitle = useRef(document.title).current;
 
   useEffect(() => {
     document.title = title;
@@ -84,5 +85,5 @@ export const useDocumentTitle = (title: string, keep: boolean = true) => {
         document.title = oldTitle;
       }
     };
-  }, []);
+  }, [keep, oldTitle]);
 };
