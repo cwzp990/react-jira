@@ -1,14 +1,18 @@
 import { Form, Input, Button } from 'antd'
 import { useState } from 'react'
 import { useAuth } from '../../context/auth-context'
+import { useQueryParam } from '../../utils/hooks'
 
-export const Login = () => {
+export const Login = (props: any) => {
   const {user, login, register} = useAuth()
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false)
+  const [query] = useQueryParam(['key', 'name'])
+  console.log(111, query)
 
   const handleSubmit = (values: any) => {
     login(values)
+    console.log(111, props)
   }
 
   const handelRegister = () => {

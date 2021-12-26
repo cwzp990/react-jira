@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { get } from "./request";
 
 interface State<D> {
@@ -86,4 +87,15 @@ export const useDocumentTitle = (title: string, keep: boolean = true) => {
       }
     };
   }, [keep, oldTitle]);
+};
+
+export const useQueryParam = <T extends string>(keys: T[]) => {
+  const [searchParams] = useSearchParams();
+
+  return [
+    keys.reduce((prev, key) => {
+      return { ...prev, [key]: searchParams.get(key) };
+    }, {}),
+    searchParams,
+  ];
 };
